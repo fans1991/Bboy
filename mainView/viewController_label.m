@@ -8,9 +8,16 @@
 
 #import "viewController_label.h"
 
-@interface viewController_label ()
+#import "EGORefreshTableHeaderView.h"
+#import <QuartzCore/QuartzCore.h>
+
+@interface viewController_label ()<UISearchBarDelegate,UISearchDisplayDelegate,EGORefreshTableHeaderDelegate>
+
+@property(nonatomic,strong)UISearchDisplayController *searchDisplay;
+@property(nonatomic,strong)EGORefreshTableHeaderView * freshView;
 
 @end
+
 
 @implementation viewController_label
 
@@ -70,7 +77,6 @@
 	
 }
 
-
 -(void)barItem
 {
 	ViewController_test * test = [[ViewController_test  alloc]initWithNibName:@"ViewController_test" bundle:nil];
@@ -78,7 +84,6 @@
     [self.navigationController pushViewController:test animated:YES];
 //    test.title = @"Test View";
 }
-
 
 -(void)alertShow
 {
@@ -109,7 +114,22 @@
 	danceTableView.dataSource = self ;
 	danceTableView.delegate  = self ;
 	[self.view  addSubview:danceTableView];
-
+	
+///****
+	UISearchBar * searchBar  = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+	searchBar.placeholder = @"搜索";
+    searchBar.delegate = self ;
+	danceTableView.tableHeaderView = searchBar ;
+	
+	self.searchDisplay = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
+	self.searchDisplay.delegate = self ;
+	self.searchDisplay.searchResultsDataSource = self ;
+	self.searchDisplay.searchResultsDelegate = self;
+	
+	self.freshView = [[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f, 0.0f-self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+	self.freshView.delegate = self ;
+	[danceTableView addSubview:self.freshView];
+	
 //添加长按手势进行在常用功能界面的设备信息移动功能
 	UILongPressGestureRecognizer * pressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressToDo:)];
 	[danceTableView addGestureRecognizer:pressGesture];
@@ -199,8 +219,6 @@
 //	[super didReceiveMemoryWarning];
 //}
 
-
-
 -(void)shareAllplatform
 {
 	
@@ -234,6 +252,47 @@
 	
 	
 }
+
+
+#pragma mark - UISearchBarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [self.searchDisplay setActive:YES animated:YES];
+    return YES;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+}
+
+
+#pragma mark ---UISearchDisplayDelegate
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+	return  YES ;
+}
+
+#pragma mark ---EGORefreshTableHeaderDelegate Methods
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+//	[self reloadTableViewDataSource];
+//	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+//	return _reloading; // should return if data source model is reloading
+    return  YES;
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+	return [NSDate date]; // should return date data source was last changed
+}
+
+
+
 
 
 @end

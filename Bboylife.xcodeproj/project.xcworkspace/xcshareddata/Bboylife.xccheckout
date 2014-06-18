@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E03D7DB7-E3C3-469B-BE4B-D5BA3390B917</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Bboylife</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D464CF58-E0F5-4C25-B7EC-E17F39E6720B</key>
+		<string>https://github.com/fans1991/Bboy.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Bboylife.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D464CF58-E0F5-4C25-B7EC-E17F39E6720B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/fans1991/Bboy.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D464CF58-E0F5-4C25-B7EC-E17F39E6720B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D464CF58-E0F5-4C25-B7EC-E17F39E6720B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Bboy</string>
+		</dict>
+	</array>
+</dict>
+</plist>
