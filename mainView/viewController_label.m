@@ -204,27 +204,33 @@
 -(void)shareAllplatform
 {
 	
-	NSArray * activity = [[NSArray alloc]initWithObjects:@"my style",nil];
+//	NSArray * activity = [[NSArray alloc]initWithObjects:@"my style",nil];
 	
-	NSArray * activityItems = [[NSArray alloc]initWithObjects:@"first",@"second", nil];
-	
-	UIActivityViewController * activityVC =[[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:activity];
+	NSArray * activityItems = [[NSArray alloc]initWithObjects:@"first",@"http://www.DevDiv.com\\", nil];
+
+///***
+	activityVC =[[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];   //last parameter must be user-defined service
 	
 	UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed)
 	{
 		NSLog(@"%@",activityType);
 		if( completed )
-		{}
+		{
+			NSLog(@"completed");
+		}
 		else
-		{}
+		{
+			NSLog(@"cancled");
+		}
 		
 		[activityVC dismissViewControllerAnimated:YES completion: nil];
 	};
 	
 	activityVC.completionHandler = myBlock ;
 	
-	
+//	[self.navigationController presentViewController:activityVC animated:YES completion:nil];
 	[self presentViewController: activityVC animated:YES completion:nil];
+	 
 	
 	
 }

@@ -14,5 +14,7 @@
 {
 	UITableView * danceTableView;
 	NSMutableArray * danceArray;
+	
+	UIActivityViewController * activityVC;
 }
 @end
