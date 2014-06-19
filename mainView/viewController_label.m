@@ -16,6 +16,12 @@
 @property(nonatomic,strong)UISearchDisplayController *searchDisplay;
 @property(nonatomic,strong)EGORefreshTableHeaderView * freshView;
 
+///===
+@property(nonatomic)BOOL reloading;
+
+-(void)reloadTableViewDataSource;
+-(void)doneLoadingTableViewData;
+
 @end
 
 
@@ -126,9 +132,10 @@
 	self.searchDisplay.searchResultsDataSource = self ;
 	self.searchDisplay.searchResultsDelegate = self;
 	
-	self.freshView = [[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f, 0.0f-self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+	self.freshView = [[EGORefreshTableHeaderView alloc]initWithFrame:CGRectMake(0.0f, 0.0f-self.view.frame.size.height, self.view.frame.size.width, danceTableView.frame.size.height)];
 	self.freshView.delegate = self ;
 	[danceTableView addSubview:self.freshView];
+    [self.freshView  refreshLastUpdatedDate];
 	
 //添加长按手势进行在常用功能界面的设备信息移动功能
 	UILongPressGestureRecognizer * pressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressToDo:)];
@@ -250,7 +257,6 @@
 	[self presentViewController: activityVC animated:YES completion:nil];
 	 
 	
-	
 }
 
 
@@ -275,21 +281,55 @@
 #pragma mark ---EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
-//	[self reloadTableViewDataSource];
-//	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
     
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
 {
-//	return _reloading; // should return if data source model is reloading
-    return  YES;
+	return _reloading; // should return if data source model is reloading
 }
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
 {
 	return [NSDate date]; // should return date data source was last changed
 }
+
+
+#pragma mark ---Reload Done
+-(void)reloadTableViewDataSource
+{
+    NSLog(@"===  start to load  Data");
+    [danceTableView  reloadData];
+    _reloading = YES ;
+}
+
+-(void)doneLoadingTableViewData
+{
+    NSLog(@"=== finish load");
+    _reloading = NO ;
+    [self.freshView egoRefreshScrollViewDataSourceDidFinishedLoading:danceTableView];
+}
+
+
+#pragma mark --
+#pragma mark --UIScrollViewDelegate Methods
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.freshView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.freshView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+
+
+
+
 
 
 
